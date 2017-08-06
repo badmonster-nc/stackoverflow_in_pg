@@ -29,7 +29,7 @@ sudo su - postgres
 export PATH=/opt/pgsql/9.6/bin:$PATH
 export LD_LIBRARY_PATH=/opt/pgsql/9.6/lib:$LD_LIBRARY_PATH
 export PGDATA=/opt/pgsql/9.6/data
-export PDLOG=/opt/pgsql/9.6/logs/serverlog
+export PDLOG=/opt/pgsql/9.6/data/serverlog
 ```
 > You can these lines in your own .bashrc 
 
@@ -69,7 +69,7 @@ PGDATA="/opt/pgsql/9.6/data"
 PGUSER=postgres
 
 # Where to keep a log file
-PGLOG="$prefix/logs/serverlog"
+PGLOG="$PGDATA/serverlog"
 ```
 
 ### step 11: start service
