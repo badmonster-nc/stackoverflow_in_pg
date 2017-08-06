@@ -1,4 +1,5 @@
 #Ubuntu from source on Ubuntu 16.04
+
 For this example, I want to install postgresql 9.6.3 on xubuntu 16.04.
 I want install pg in /opt/pgsql/9.6
 my data is here: /opt/pgsql/9.6/data
