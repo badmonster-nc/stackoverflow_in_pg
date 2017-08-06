@@ -84,6 +84,6 @@ sudo su - postgres
 psql
 ```
 > If you add this 
-> export PATH=/opt/pgsql/9.6/bin:$PATH
-> in your .bashrc, your can connect to postgres without change user like this
+> `export PATH=/opt/pgsql/9.6/bin:$PATH`
+> in your .bashrc, your can connect to postgres without change user like this\
 > psql -U postgres 
