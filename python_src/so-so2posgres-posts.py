@@ -45,25 +45,25 @@ for event, post in posts:
         if post.attrib.has_key("PostTypeId"):
             type = int(post.attrib["PostTypeId"])
         else:
-            type = "\\N"
+            type = "\N"
         creation = post.attrib["CreationDate"]
         if post.attrib.has_key("OwnerUserId"):
             owner = post.attrib["OwnerUserId"]
         else:
-            owner = "\\N"
+            owner = "\N"
         if post.attrib.has_key("Title"):
             title = escape(post.attrib["Title"])
         else:
-            title = "\\N"
+            title = "\N"
         if post.attrib.has_key("Body"):
             body = escape(post.attrib["Body"])
         else:
-            body = "\\N"
+            body = "\N"
 
         if post.attrib.has_key("AcceptedAnswerId"):
             accepted_answer = post.attrib["AcceptedAnswerId"]
         else:
-            accepted_answer = "\\N"
+            accepted_answer = "\N"
         print "%i\t%s\t%s\t%s\t%s\t%s\t%s" % (id, type, title.encode(encoding), body.encode(encoding), creation, owner, accepted_answer)
         post.clear()
     
