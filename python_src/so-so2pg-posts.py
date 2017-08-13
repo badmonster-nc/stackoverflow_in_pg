@@ -38,33 +38,65 @@ filename = "Posts.xml"
 posts = ElementTree.iterparse(filename) 
 tags = {}
 tag_id = 1
-print "COPY posts (id, type, title, body, creation, owner, accepted_answer) FROM stdin;"
+print "COPY posts (id, type, creation, score, viewcount, title, body, userid, lastactivity, tags, answercount, commentcount) FROM stdin;"
+
 for event, post in posts:
     if event == "end" and post.tag == "row":
         id = int(post.attrib["Id"])
+
         if post.attrib.has_key("PostTypeId"):
             type = int(post.attrib["PostTypeId"])
         else:
             type = "\N"
+
         creation = post.attrib["CreationDate"]
-        if post.attrib.has_key("OwnerUserId"):
-            owner = post.attrib["OwnerUserId"]
+
+        if post.attrib.has_key("Score"):
+            score = int(post.attrib["Score"])
         else:
-            owner = "\N"
+            score = "\N"
+
+        if post.attrib.has_key("ViewCount"):
+            viewcount = int(post.attrib["ViewCount"])
+        else:
+            viewcount = "\N"
+
         if post.attrib.has_key("Title"):
             title = escape(post.attrib["Title"])
         else:
             title = "\N"
+
         if post.attrib.has_key("Body"):
             body = escape(post.attrib["Body"])
         else:
             body = "\N"
 
-        if post.attrib.has_key("AcceptedAnswerId"):
-            accepted_answer = post.attrib["AcceptedAnswerId"]
+        if post.attrib.has_key("OwnerUserId"):
+            owner = post.attrib["OwnerUserId"]
         else:
-            accepted_answer = "\N"
-        print "%i\t%s\t%s\t%s\t%s\t%s\t%s" % (id, type, title.encode(encoding), body.encode(encoding), creation, owner, accepted_answer)
+            owner = "\N"
+
+        if post.attrib.has_key("LastActivityDate"):
+            lastactivity = post.attrib["LastActivityDate"]
+        else:
+            lastactivity = "\N"
+        
+        if post.attrib.has_key("Tags"):
+            tags = escape(post.attrib["Tags"])
+        else:
+            tags = "\N"
+        
+        if post.attrib.has_key("AnswerCount"):
+            answercount = int(post.attrib["AnswerCount"])
+        else:
+            answercount = "\N"
+
+        if post.attrib.has_key("CommentCount"):
+            commentcount = int(post.attrib["CommentCount"])
+        else:
+            commentcount = "\N"
+
+        print "%i\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (id, type, creation, score, viewcount, title.encode(encoding), body.encode(encoding), owner, lastactivity, tags.encode(encoding), answercount, commentcount)
         post.clear()
     
 print "\."
