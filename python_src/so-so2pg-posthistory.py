@@ -38,13 +38,13 @@ filename = "PostHistory.xml"
 postHistory = ElementTree.iterparse(filename) 
 tags = {}
 tag_id = 1
-print "COPY posthistory (id, posthistorytypeid, postid, revisionguid, creation, userid, userdisplaymame, text) FROM stdin;"
+print "COPY posthistory (id, type, postid, revisionguid, creation, userid, userdisplaymame, text) FROM stdin;"
 
 for event, post in postHistory:
     if event == "end" and post.tag == "row":
         id = int(post.attrib["Id"])
 
-        posthistorytypeid = int(post.attrib["PostHistoryTypeId"])
+        type = int(post.attrib["PostHistoryTypeId"])
 
         postid = int(post.attrib["PostId"])
 
@@ -67,7 +67,7 @@ for event, post in postHistory:
         else:
             text = "\N"
 
-        print "%i\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (id, posthistorytypeid, postid, revisionguid, creation, userid, userdisplaymame.encode(encoding), text.encode(encoding))
+        print "%i\t%s\t%s\t%s\t%s\t%s\t%s\t%s" % (id, type, postid, revisionguid, creation, userid, userdisplaymame.encode(encoding), text.encode(encoding))
         post.clear()
     
 print "\."
