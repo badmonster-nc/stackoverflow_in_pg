@@ -1,53 +1,94 @@
 ALTER TABLE Comments DROP CONSTRAINT comments_id_fkey;
 DROP TABLE Votes;
-DROP TABLE Tagging;
 DROP TABLE Tags;
 DROP TABLE Posts;
 DROP TABLE Comments;
 DROP TABLE Users;
+DROP TABLE PostLinks;
+DROP TABLE PostHistory;
+DROP TABLE Badges;
+
+
 
 CREATE TABLE Users (
-    id INTEGER UNIQUE NOT NULL,
-    name TEXT, -- Yes, can be null some times
-    reputation INTEGER NOT NULL,
-    creation TIMESTAMP NOT NULL,
-    website TEXT
-    -- TODO: age, location (impossible to parse, because there is no formal structure), etc
-    );
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    reputation          INTEGER NOT NULL,           --Reputation
+    creation            TIMESTAMP NOT NULL,         --CreationDate
+    name                TEXT,                       --DisplayName Yes, can be null some times
+    lastaccess          TIMESTAMP,                  --LastAccessDate
+    website             TEXT,                       --WebsiteUrl
+    location            TEXT,                       --Location
+    aboutme             TEXT,                       --AboutMe
+    views               INTEGER,                    --Views
+    upvotes             INTEGER,                    --upvotes
+    downvotes           INTEGER,                    --downvotes
+    age                 INTEGER                     --age
+);
 
 CREATE TABLE Comments (
-    id INTEGER UNIQUE NOT NULL,
-    creation TIMESTAMP NOT NULL,
-    owner INTEGER REFERENCES Users(id),
-    post INTEGER NOT NULL);
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    postid              INTEGER NOT NULL,           --PostId
+    score               INTEGER,                    --Score
+    text                TEXT,                       --Text
+    creation            TIMESTAMP NOT NULL,         --CreationDate
+    userid              INTEGER                     --UserId
+);
 
 CREATE TABLE Posts (
-    id INTEGER UNIQUE NOT NULL,
-    type INTEGER NOT NULL, -- 1 Question, 2 Answer. TODO: uses an ENUM type
-    title TEXT, -- May be NULL if the post is not a Question
-    creation TIMESTAMP NOT NULL,
-    owner INTEGER REFERENCES Users(id),
-    accepted_answer INTEGER -- No REFERENCES Comments(id) because some posts references
-                              -- a non-available comment :-(
-    -- TODO: score, size of the body, last edition, last editor, etc
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    type                INTEGER NOT NULL,           --PostTypeId
+    creation            TIMESTAMP NOT NULL,         --CreationDate
+    score               INTEGER,                    --Score
+    viewcount           INTEGER,                    --ViewCount
+    title               TEXT,                       --Title
+    body                TEXT,                       --Body
+    userid              INTEGER,                    --OwnerUserId
+    lastactivity        TIMESTAMP,                  --LastActivityDate
+    tags                TEXT,                       --Tags
+    answercount         INTEGER,                    --AnswerCount
+    commentcount        INTEGER                     --CommentCount
     );
 
 CREATE TABLE Tags (
-    id INTEGER UNIQUE NOT NULL,
-    name TEXT UNIQUE NOT NULL);
-
-CREATE TABLE Tagging (
-    tag INTEGER NOT NULL REFERENCES Tags(id),
-    post INTEGER NOT NULL REFERENCES Posts(id));
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    name                TEXT UNIQUE NOT NULL,       --TagName
+    count               INTEGER,                    --Count
+    excerptpost         INTEGER,                    --ExcerptPostId
+    wikipost            INTEGER                     --WikiPostId
+);
 
 CREATE TABLE Votes (
-    id INTEGER UNIQUE NOT NULL,
-    type INTEGER NOT NULL,  -- 2 UpMod, 3 DownMod, etc. TODO: uses an ENUM type
-    post INTEGER NOT NULL, -- No REFERENCES Posts(id) because some votes references
-                           -- a non-available post :-(
-    creation DATE NOT NULL); -- Unfortunately not a timestamp
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    type                INTEGER NOT NULL,           --VoteTypeId
+    postid              INTEGER NOT NULL,           --PostId
+    creation            DATE NOT NULL               --CreationDate
+);
 
--- TODO: Badges
+CREATE TABLE PostLinks (
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    creation            TIMESTAMP NOT NULL,         --CreationDate
+    postid              INTEGER,                    --PostId
+    relatedpostid       INTEGER,                    --RelatedPostId
+    linktypeid          INTEGER                     --LinkTypeId
+);
 
--- Add this one by hand after filling in the tables
--- ALTER TABLE Comments ADD FOREIGN KEY (id) REFERENCES Posts(id);
+CREATE TABLE PostHistory (
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    type                INTEGER,                    --PostHistoryTypeId
+    postid              INTEGER,                    --PostId
+    revisionguid        TEXT,                       --RevisionGUID
+    creation            TIMESTAMP NOT NULL,         --CreationDate
+    userid              INTEGER,                    --UserId
+    userdisplaymame     TEXT,                       --UserDisplayName
+    text                TEXT                        --Text
+);
+
+CREATE TABLE Badges (
+    id                  INTEGER UNIQUE NOT NULL,    --Id
+    userid              INTEGER UNIQUE NOT NULL,    --UserId
+    name                TEXT,                       --Name
+    date                TIMESTAMP,                  --Date
+    badgeclass          INTEGER,                    --Class
+    tagbased            TEXT                        --TagBased
+);
+
