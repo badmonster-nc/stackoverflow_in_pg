@@ -36,7 +36,7 @@ os.chdir(sys.argv[1])
 
 filename = "Tags.xml"
 tags = ElementTree.iterparse(filename) 
-print "COPY tags (id, name, count, excerptpostid, wikipostid) FROM stdin;"
+print "COPY tags (id, name, count, excerptpost, wikipost) FROM stdin;"
 for event, tag in tags:
     if event == "end" and tag.tag == "row":
         id = int(tag.attrib["Id"])
@@ -46,15 +46,15 @@ for event, tag in tags:
         count = int(tag.attrib["Count"])
         
         if tag.attrib.has_key("ExcerptPostId"):
-            excerptpostid = tag.attrib["ExcerptPostId"]
+            excerptpost = tag.attrib["ExcerptPostId"]
         else:
-            excerptpostid = "\N"
+            excerptpost = "\N"
         
         if tag.attrib.has_key("WikiPostId"):
-            wikipostid = tag.attrib["WikiPostId"]
+            wikipost = tag.attrib["WikiPostId"]
         else:
-            wikipostid = "\N"
+            wikipost = "\N"
 
-        print "%i\t%s\t%s\t%s\t%s" % (id, name, count, excerptpostid, wikipostid)
+        print "%i\t%s\t%s\t%s\t%s" % (id, name, count, excerptpost, wikipost)
         tag.clear()
 print "\."
