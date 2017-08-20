@@ -27,6 +27,7 @@ Extract the XML file of each downloaded file.
 
 At the time of writing this document, the dump files are from June 2017
 Each XML file store a class of Stack Overflow objects:
+
 | Object        | 7zip file size    | XML file size | SQL file size (parsed xml)    | Lines in pg table | Pg table size |
 |---------------|:----------------: |:-------------:|:--------------------------:   |:-----------------:|--------------:|
 | Badges        | 166 MB            | 2.51 GB       | 1.2 GB                        | 22 997 200 lines  | 1 658 MB      |
@@ -36,7 +37,7 @@ Each XML file store a class of Stack Overflow objects:
 | Posts         | 10.4 GB           | 52.3 GB       | 38.1 GB                       | 36 149 100 lines  | 31 GB         |
 | Tags          | 704 KB            | 4.18 MB       | 1.67 MB                       | 49 306 lines      | 2 808 kB      |
 | Users         | 284 MB            | 2.07 GB       | 753 MB                        | 7 246 590 lines   | 773 MB        |
-| Votes         | 757 MB            | 11.7 GB       | 5.23 GB                       | 128 369 000 lines | 5 422 MB  |
+| Votes         | 757 MB            | 11.7 GB       | 5.23 GB                       | 128 369 000 lines | 5 422 MB      |
 
 ## Transform xml file to sql file
 
