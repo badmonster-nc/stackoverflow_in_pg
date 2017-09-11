@@ -22,7 +22,7 @@ sudo useradd -d /opt/pgsql -m -r -s /bin/bash postgres
 ```Bash
 sudo mkdir -p /opt/pgsql/src
 sudo mv postgresql-9.6.3.tar.bz2 /opt/pgsql/src/postgresql-9.6.3.tar.bz2
-sudo chown -R postgres: postgres /opt/pgsql/
+sudo chown -R postgres:postgres /opt/pgsql/
 ```
 ### Step 5: Connect with postgres user
 ```Bash
@@ -32,10 +32,10 @@ sudo su - postgres
 ### Step 6: Export the PATH, LD\_LIBRARY, PGDATA, PGLOG variables to .bashrc
 ```Bash
 #config postgres
-export PATH = /opt/pgsql/9.6/bin:$PATH
-export LD_LIBRARY_PATH = /opt/pgsql/9.6/lib:$LD_LIBRARY_PATH
-export PGDATA = /opt/pgsql/9.6/data
-export PDLOG = /opt/pgsql/9.6/data/serverlog
+export PATH=/opt/pgsql/9.6/bin:$PATH
+export LD_LIBRARY_PATH=/opt/pgsql/9.6/lib:$LD_LIBRARY_PATH
+export PGDATA=/opt/pgsql/9.6/data
+export PDLOG=/opt/pgsql/9.6/data/serverlog
 ```
 > You can add these lines to your .bashrc
 
@@ -50,7 +50,7 @@ tar -xvjf postgresql-9.6.3.tar.bz2
 cd postgresql-9.6.3/
 ./configure --prefix /opt/pgsql/9.6 --with-systemd
 make
-Make install
+make install
 ```
 
 ### Step 9: Initialize the pg database
@@ -68,16 +68,16 @@ sudo chmod +x /etc/init.d/postgresql
 Modify the prefix, PGDATA, PGUSER and PGLOG variables in /etc/init.d/postgresql:
 ```Bash
 # Installation prefix
-prefix = /opt/pgsql/9.6
+prefix=/opt/pgsql/9.6
 
 # Data directory
-PGDATA = "/opt/pgsql/9.6/data"
+PGDATA="/opt/pgsql/9.6/data"
 
 # Who to run the postmaster as, usually "postgres". (NOT "root")
-PGUSER = postgres
+PGUSER=postgres
 
 # Where to keep a log file
-PGLOG = "$PGDATA/ServerLog"
+PGLOG="$PGDATA/serverLog"
 ```
 
 ### Step 11: Start the Service
