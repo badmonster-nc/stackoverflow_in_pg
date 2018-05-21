@@ -85,7 +85,7 @@ CREATE TABLE PostHistory (
 
 CREATE TABLE Badges (
     id                  INTEGER UNIQUE NOT NULL,    --Id
-    userid              INTEGER UNIQUE NOT NULL,    --UserId
+    userid              INTEGER,                    --UserId
     name                TEXT,                       --Name
     date                TIMESTAMP,                  --Date
     badgeclass          INTEGER,                    --Class
